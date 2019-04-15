@@ -4,9 +4,30 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MachineMonitor"
+        xmlns:controls="clr-namespace:MachineMonitor.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Machine Monitor"
+        Background="{StaticResource SystemControlBackgroundBrush}"
+        Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Processeur"/>
+        <controls:RadialProgressBar x:Name="cpuProgressBar"
+                                    Outline="Gray"
+                                    Foreground="Green"
+                                    Grid.Row="1"
+                                    Height="100"
+                                    Value="50"
+                                    Width="100">
+        </controls:RadialProgressBar>
     </Grid>
 </Window>
