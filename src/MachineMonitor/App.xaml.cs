@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace MachineMonitor
+namespace Monbsoft.MachineMonitor
 {
     /// <summary>
     /// Logique d'interaction pour App.xaml

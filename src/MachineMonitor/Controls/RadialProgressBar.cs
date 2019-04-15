@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace MachineMonitor.Controls
+namespace Monbsoft.MachineMonitor.Controls
 {
     /// <summary>
     /// An alternative impementation of a progress bar.

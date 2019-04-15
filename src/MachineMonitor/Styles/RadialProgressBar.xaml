@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:MachineMonitor.Controls"
-                    xmlns:local="clr-namespace:MachineMonitor.Styles">
+                    xmlns:controls="clr-namespace:Monbsoft.MachineMonitor.Controls">
    
     <Style TargetType="controls:RadialProgressBar" >
         <Setter Property="Foreground" Value="Black" />
