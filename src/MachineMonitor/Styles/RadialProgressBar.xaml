@@ -11,8 +11,15 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:RadialProgressBar">
                     <Grid Background="{TemplateBinding Background}">
+                        <TextBlock x:Name="ValueTextPart"
+                                   Foreground="White" 
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
                         <!-- Gray outline of progress bar -->
-                        <Path Fill="Transparent" Stroke="{TemplateBinding Outline}" StrokeThickness="{TemplateBinding Thickness}" StrokeDashCap="Flat">
+                        <Path Fill="Transparent" 
+                              Stroke="{TemplateBinding Outline}" 
+                              StrokeThickness="{TemplateBinding Thickness}" 
+                              StrokeDashCap="Flat">
                             <Path.Data>
                                 <PathGeometry>
                                     <PathGeometry.Figures>

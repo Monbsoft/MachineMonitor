@@ -8,7 +8,7 @@
         Title="Machine Monitor"
         Background="{StaticResource SystemControlBackgroundBrush}"
         Height="450" 
-        Width="800">
+        Width="800" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -20,13 +20,28 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Style="{StaticResource TitleStyle}" Text="Processeur" />
+        <TextBlock Style="{StaticResource TitleStyle}" 
+                   Text="Processeur" />
         <controls:RadialProgressBar x:Name="cpuProgressBar"
                                     Outline="Gray"
                                     Foreground="Green"
                                     Grid.Row="1"
                                     Height="100"
-                                    Value="50"
+                                    Thickness="5"
+                                    Value="{Binding Cpu, Mode=OneWay}"                                    
+                                    Width="100">
+        </controls:RadialProgressBar>
+        <TextBlock Grid.Column="1"
+                   Style="{StaticResource TitleStyle}" 
+                   Text="Mémoire" />
+        <controls:RadialProgressBar x:Name="memoryProgressBar"
+                                    Outline="Gray"
+                                    Foreground="Green"
+                                    Grid.Column="1"
+                                    Grid.Row="1"
+                                    Height="100"
+                                    Thickness="5"
+                                    Value="{Binding Ram, Mode=OneWay}"                                    
                                     Width="100">
         </controls:RadialProgressBar>
     </Grid>

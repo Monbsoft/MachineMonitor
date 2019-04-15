@@ -18,17 +18,20 @@ namespace Monbsoft.MachineMonitor.Controls
     [TemplatePart(Name = OutlineArcPartName, Type = typeof(ArcSegment))]
     [TemplatePart(Name = BarFigurePartName, Type = typeof(PathFigure))]
     [TemplatePart(Name = BarArcPartName, Type = typeof(ArcSegment))]
+    [TemplatePart(Name = ValueTextPartName, Type = typeof(TextBlock))]
     public class RadialProgressBar : ProgressBar
     {
         private const string OutlineFigurePartName = "OutlineFigurePart";
         private const string OutlineArcPartName = "OutlineArcPart";
         private const string BarFigurePartName = "BarFigurePart";
         private const string BarArcPartName = "BarArcPart";
+        private const string ValueTextPartName = "ValueTextPart";
 
         private PathFigure outlineFigure;
         private PathFigure barFigure;
         private ArcSegment outlineArc;
         private ArcSegment barArc;
+        private TextBlock valueText;
 
         private bool allTemplatePartsDefined = false;
 
@@ -62,6 +65,7 @@ namespace Monbsoft.MachineMonitor.Controls
         protected override void OnValueChanged(double oldValue, double newValue)
         {
             base.OnValueChanged(oldValue, newValue);
+            valueText.Text = $"{Math.Round(newValue, 0)}%";
             RenderSegment();
         }
 
@@ -76,6 +80,7 @@ namespace Monbsoft.MachineMonitor.Controls
             outlineArc = GetTemplateChild(OutlineArcPartName) as ArcSegment;
             barFigure = GetTemplateChild(BarFigurePartName) as PathFigure;
             barArc = GetTemplateChild(BarArcPartName) as ArcSegment;
+            valueText = GetTemplateChild(ValueTextPartName) as TextBlock;
 
             allTemplatePartsDefined = outlineFigure != null && outlineArc != null && barFigure != null && barArc != null;
 
