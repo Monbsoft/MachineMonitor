@@ -14,6 +14,7 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -22,27 +23,56 @@
         </Grid.RowDefinitions>
         <TextBlock Style="{StaticResource TitleStyle}" 
                    Text="Processeur" />
-        <controls:RadialProgressBar x:Name="cpuProgressBar"
-                                    Outline="Gray"
-                                    Foreground="Green"
-                                    Grid.Row="1"
-                                    Height="100"
-                                    Thickness="5"
-                                    Value="{Binding Cpu, Mode=OneWay}"                                    
-                                    Width="100">
+            <controls:RadialProgressBar x:Name="cpuProgressBar"
+                                        Outline="Gray"
+                                        Foreground="Green"
+                                        Grid.Row="1"
+                                        Height="50"
+                                        Thickness="6"
+                                        Value="{Binding Cpu, Mode=OneWay}"                                    
+                                        Width="50">
         </controls:RadialProgressBar>
+        <!-- Memory-->
         <TextBlock Grid.Column="1"
                    Style="{StaticResource TitleStyle}" 
                    Text="Mémoire" />
-        <controls:RadialProgressBar x:Name="memoryProgressBar"
-                                    Outline="Gray"
-                                    Foreground="Green"
-                                    Grid.Column="1"
-                                    Grid.Row="1"
-                                    Height="100"
-                                    Thickness="5"
-                                    Value="{Binding Ram, Mode=OneWay}"                                    
-                                    Width="100">
+            <controls:RadialProgressBar x:Name="memoryProgressBar"
+                                        Outline="Gray"
+                                        Foreground="Green"
+                                        Grid.Column="1"
+                                        Grid.Row="1"
+                                        Height="50"
+                                        Thickness="6"
+                                        Value="{Binding Ram, Mode=OneWay}"                                    
+                                        Width="50">
         </controls:RadialProgressBar>
+        <!-- Disk -->
+        <TextBlock Grid.Column="2"
+                   Style="{StaticResource TitleStyle}" 
+                   Text="Disque" />
+            <controls:RadialProgressBar x:Name="diskProgressBar"
+                                            Outline="Gray"
+                                            Foreground="Green"
+                                            Grid.Column="2"
+                                            Grid.Row="1"
+                                            Height="50"
+                                            Thickness="6"
+                                            Value="{Binding Disk, Mode=OneWay}"                                    
+                                            Width="50">
+            </controls:RadialProgressBar>
+        <!-- Network -->
+        <TextBlock Grid.Column="3"
+                   Style="{StaticResource TitleStyle}" 
+                   Text="Réseau" />
+        <controls:RadialProgressBar x:Name="networkProgressBar"
+                                        Outline="Gray"
+                                        Foreground="Green"
+                                        Grid.Column="3"
+                                        Grid.Row="1"
+                                        Height="50"
+                                        Thickness="6"
+                                        Value="{Binding Disk, Mode=OneWay}"                                    
+                                        Width="50">
+        </controls:RadialProgressBar>        
     </Grid>
 </Window>
