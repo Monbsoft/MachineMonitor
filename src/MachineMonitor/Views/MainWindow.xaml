@@ -1,4 +1,4 @@
-﻿<Window x:Class="Monbsoft.MachineMonitor.MainWindow"
+﻿<Window x:Class="Monbsoft.MachineMonitor.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,6 +9,17 @@
         Background="{StaticResource SystemControlBackgroundBrush}"
         Height="450" 
         Width="800" Loaded="Window_Loaded">
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem x:Name="conflgurationMenuItem"
+                      Click="ConflgurationMenuItem_Click"
+                      Header="Configuration" />
+            <Separator/>
+            <MenuItem x:Name="closeMenuItem" 
+                      Click="CloseMenuItem_Click"
+                      Header="Fermer"/>
+        </ContextMenu>
+    </Window.ContextMenu>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

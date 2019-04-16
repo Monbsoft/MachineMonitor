@@ -37,11 +37,20 @@ namespace Monbsoft.MachineMonitor.ViewModels
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<ConfigurationViewModel>();
         }
         #endregion
 
         #region Propriétés
         public static ViewModelLocator Current => _current ?? (_current = new ViewModelLocator());
+
+        public ConfigurationViewModel Configuration
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ConfigurationViewModel>();
+            }
+        }
 
         public MainViewModel Main
         {
@@ -53,14 +62,10 @@ namespace Monbsoft.MachineMonitor.ViewModels
         #endregion
 
         #region Méthodes
-        #endregion
-
-
-
-        
         public static void Cleanup()
         {
             // TODO Clear the ViewModels
         }
+        #endregion        
     }
 }

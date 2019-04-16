@@ -1,4 +1,5 @@
 using GalaSoft.MvvmLight;
+using Monbsoft.MachineMonitor.Views;
 using System;
 using System.Diagnostics;
 using System.Windows.Threading;
@@ -7,12 +8,18 @@ namespace Monbsoft.MachineMonitor.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+
+        #region Champs
         private readonly PerformanceCounter _cpuCounter;
         private readonly PerformanceCounter _diskCounter;
         private readonly PerformanceCounter _memoryCounter;
         private double _cpu;
         private double _disk;
         private double _ram;
+        private MainWindow _view;
+        #endregion
+
+        #region Constructeurs
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -22,7 +29,9 @@ namespace Monbsoft.MachineMonitor.ViewModels
             _memoryCounter = new PerformanceCounter("Memory", "% Committed Bytes In Use");
             _diskCounter = new PerformanceCounter("PhysicalDisk", "% Disk Read Time", "_Total");
         }
+        #endregion
 
+        #region Propriétés
         /// <summary>
         /// Gets or sets the percentage of the cpu usage.
         /// </summary>
@@ -48,6 +57,13 @@ namespace Monbsoft.MachineMonitor.ViewModels
             get { return _ram; }
             set { Set(ref _ram, value); }
         }
+        #endregion
+
+        #region Méthodes
+        public void Initialize(MainWindow view)
+        {
+            _view = view;
+        }
         public void Refresh()
         {
             Cpu = _cpuCounter.NextValue();
@@ -61,5 +77,7 @@ namespace Monbsoft.MachineMonitor.ViewModels
             //PerformanceCounter bandwidthCounter = new PerformanceCounter("Network Interface", "Current Bandwidth", networkCard);
             //float bandwidth = bandwidthCounter.NextValue();
         }
+        #endregion
+
     }
 }
