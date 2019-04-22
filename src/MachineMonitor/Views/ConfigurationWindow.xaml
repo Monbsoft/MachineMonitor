@@ -5,8 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Monbsoft.MachineMonitor.Views"
         mc:Ignorable="d"
-        Title="ConfigurationWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Configuration"
+        Background="{StaticResource SystemControlBackgroundBrush}"
+        Height="450" 
+        Width="800" 
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="5,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource TextBlockStyle}"
+                   Text="Réseau:"/>
+        <ComboBox Grid.Column="1"
+                  Grid.Row="1"
+                  HorizontalAlignment="Left"
+                  ItemsSource="{Binding Networks}"                  
+                  Width="150">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
     </Grid>
 </Window>

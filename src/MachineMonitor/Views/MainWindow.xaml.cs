@@ -45,6 +45,16 @@ namespace Monbsoft.MachineMonitor.Views
         #endregion
 
         #region Méthodes
+        private void CloseMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+        private void ConflgurationMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new ConfigurationWindow();
+            dlg.Owner = this;
+            dlg.ShowDialog();
+        }
         private void Timer_Tick(object sender, EventArgs e)
         {
             ViewModel.Refresh();
@@ -53,18 +63,6 @@ namespace Monbsoft.MachineMonitor.Views
         {
             
             _timer.Start();
-        }
-
-        private void CloseMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();                
-        }
-
-        private void ConflgurationMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            var dlg = new ConfigurationWindow();
-            dlg.Owner = this;
-            dlg.ShowDialog();
         }
         #endregion
 
