@@ -71,6 +71,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Configuration\ConfigurationStore.cs" />
+    <Compile Include="Services\NetworkService.cs" />
     <Compile Include="Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

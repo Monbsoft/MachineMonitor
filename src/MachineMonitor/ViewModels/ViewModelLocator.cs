@@ -15,6 +15,7 @@
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
 using Monbsoft.MachineMonitor.Configuration;
+using Monbsoft.MachineMonitor.Services;
 
 namespace Monbsoft.MachineMonitor.ViewModels
 {
@@ -37,6 +38,7 @@ namespace Monbsoft.MachineMonitor.ViewModels
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);           
             SimpleIoc.Default.Register<ConfigurationStore>();
+            SimpleIoc.Default.Register<NetworkService>();
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<ConfigurationViewModel>();
         }

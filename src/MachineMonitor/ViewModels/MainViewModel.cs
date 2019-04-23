@@ -1,4 +1,6 @@
 using GalaSoft.MvvmLight;
+using Monbsoft.MachineMonitor.Configuration;
+using Monbsoft.MachineMonitor.Services;
 using Monbsoft.MachineMonitor.Views;
 using System;
 using System.Diagnostics;
@@ -15,21 +17,27 @@ namespace Monbsoft.MachineMonitor.ViewModels
         private readonly PerformanceCounter _cpuCounter;
         private readonly PerformanceCounter _diskCounter;
         private readonly PerformanceCounter _memoryCounter;
+        private readonly PerformanceCounter _networkCounter;
         private double _cpu;
         private double _disk;
         private double _ram;
-        private MainWindow _view;
+        private double _network;
         #endregion
 
         #region Constructeurs
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel()
+        public MainViewModel(ConfigurationStore configuration, NetworkService networkService)
         {
             _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
             _memoryCounter = new PerformanceCounter("Memory", "% Committed Bytes In Use");
             _diskCounter = new PerformanceCounter("PhysicalDisk", "% Disk Read Time", "_Total");
+
+            if (configuration != null && !string.IsNullOrEmpty(configuration.Network))
+            {
+                _networkCounter = new PerformanceCounter("Network Interface", "Bytes Received/sec", configuration.Network);
+            }
         }
         #endregion
 
@@ -51,6 +59,13 @@ namespace Monbsoft.MachineMonitor.ViewModels
             get { return _disk; }
             set { Set(ref _disk, value); }
         }
+
+        public double Network
+        {
+            get { return _network; }
+            set { Set(ref _network, value); }
+        }
+
         /// <summary>
         /// Gets or sets the percentage of the memory usage.
         /// </summary>
@@ -62,39 +77,21 @@ namespace Monbsoft.MachineMonitor.ViewModels
         #endregion
 
         #region Méthodes
-        public void Initialize(MainWindow view)
-        {
-            _view = view;
-        }
         public void Refresh()
         {
             Cpu = _cpuCounter.NextValue();
             Ram = _memoryCounter.NextValue();
             Disk = _diskCounter.NextValue();
-            Test();
+            Network = GetPercentageNetwork();
         }
 
-        private static bool IsCompatibleInterface(NetworkInterfaceType nit)
+        private double GetPercentageNetwork()
         {
-            switch (nit)
+            if(_networkCounter == null)
             {
-                case NetworkInterfaceType.Loopback:
-                case NetworkInterfaceType.HighPerformanceSerialBus:
-                case NetworkInterfaceType.Ppp:
-                    return false;
-                default:
-                    return true;
+                return 0d;
             }
-        }
-
-        private void Test()
-        {
-            var interfaces = NetworkInterface.GetAllNetworkInterfaces()
-                .Where(x => x.Speed > 0
-                    && x.Supports(NetworkInterfaceComponent.IPv4)
-                    && x.Supports(NetworkInterfaceComponent.IPv6)
-                    && x.OperationalStatus == OperationalStatus.Up
-                    && IsCompatibleInterface(x.NetworkInterfaceType)).ToArray();
+            return ((double)_networkCounter.NextValue() * 8) / 1000000;
         }
         #endregion
 

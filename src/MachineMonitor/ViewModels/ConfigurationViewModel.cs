@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
+using Monbsoft.MachineMonitor.Configuration;
+using Monbsoft.MachineMonitor.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,46 +13,48 @@ namespace Monbsoft.MachineMonitor.ViewModels
     public class ConfigurationViewModel : ViewModelBase
     {
         #region Champs
+        private readonly ConfigurationStore _configuration;
+        private readonly NetworkService _networkService;
+        private string _network;
         #endregion
 
         #region Constructeurs
-        public ConfigurationViewModel()
+        public ConfigurationViewModel(ConfigurationStore configuration, NetworkService networkService)
         {
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _networkService = networkService ?? throw new ArgumentNullException(nameof(networkService));
             Initialize();
         }
         #endregion
 
         #region Propriétés
-        public List<NetworkInterface> Networks
+        public List<string> Networks
         {
             get;
             private set;
         }
+
+        public string SelectedNetwork
+        {
+            get { return _network; }
+            set
+            {
+                Set(ref _network, value);
+                Network_Changed();
+            }
+        }
         #endregion
 
         #region Méthodes
+
+
+        private void Network_Changed()
+        {
+            _configuration.Network = SelectedNetwork;
+        }
         private void Initialize()
         {
-            Networks = NetworkInterface.GetAllNetworkInterfaces()
-                .Where(x => x.Speed > 0
-                    && x.Supports(NetworkInterfaceComponent.IPv4)
-                    && x.Supports(NetworkInterfaceComponent.IPv6)
-                    && x.OperationalStatus == OperationalStatus.Up
-                    && IsCompatibleInterface(x.NetworkInterfaceType))
-                    .ToList();
-        }
-
-        private static bool IsCompatibleInterface(NetworkInterfaceType nit)
-        {
-            switch (nit)
-            {
-                case NetworkInterfaceType.Loopback:
-                case NetworkInterfaceType.HighPerformanceSerialBus:
-                case NetworkInterfaceType.Ppp:
-                    return false;
-                default:
-                    return true;
-            }
+            Networks = _networkService.GetNetworks();
         }
         #endregion
     }
