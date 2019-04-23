@@ -22,6 +22,7 @@ namespace Monbsoft.MachineMonitor.ViewModels
         private double _disk;
         private double _ram;
         private double _network;
+        private double _networkMax;
         #endregion
 
         #region Constructeurs
@@ -91,7 +92,12 @@ namespace Monbsoft.MachineMonitor.ViewModels
             {
                 return 0d;
             }
-            return ((double)_networkCounter.NextValue() * 8) / 1000000;
+            double value = ((double)_networkCounter.NextValue() * 8) / 1000000;
+            if(_networkMax < value)
+            {
+                _networkMax = value;
+            }
+            return value * 100 / _networkMax;
         }
         #endregion
 

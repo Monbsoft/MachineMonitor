@@ -86,7 +86,7 @@
                                     Grid.Row="1"
                                     Height="50"
                                     Thickness="6"
-                                    Value="{Binding Disk, Mode=OneWay}"                                    
+                                    Value="{Binding Network, Mode=OneWay}"                                    
                                     Width="50">
         </controls:RadialProgressBar>        
     </Grid>
