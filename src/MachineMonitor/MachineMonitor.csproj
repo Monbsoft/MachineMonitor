@@ -72,7 +72,7 @@
     </ApplicationDefinition>
     <Compile Include="Configuration\ConfigurationStore.cs" />
     <Compile Include="Services\NetworkService.cs" />
-    <Compile Include="Settings.Designer.cs">
+    <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -118,7 +118,7 @@
       <SubType>Code</SubType>
     </Compile>
     <None Include="packages.config" />
-    <None Include="Settings.settings">
+    <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>

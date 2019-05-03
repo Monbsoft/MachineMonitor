@@ -82,6 +82,7 @@ namespace Monbsoft.MachineMonitor.ViewModels
         {
             Cpu = _cpuCounter.NextValue();
             Ram = _memoryCounter.NextValue();
+            Console.WriteLine($"Ram = {Ram}");
             Disk = _diskCounter.NextValue();
             Network = GetPercentageNetwork();
         }
