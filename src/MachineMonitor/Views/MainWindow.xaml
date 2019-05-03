@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Monbsoft.MachineMonitor.Controls"
         mc:Ignorable="d"
-        Title="Machine Monitor"
+        AllowsTransparency="True"
         Background="{StaticResource SystemControlBackgroundBrush}"
         Height="100" 
         Loaded="Window_Loaded" 
         ResizeMode="NoResize"
+        Title="Machine Monitor"
+        Topmost="True"
         Width="400" 
         WindowStyle="None">
     <Window.ContextMenu>

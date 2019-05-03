@@ -1,10 +1,5 @@
 ﻿using Monbsoft.MachineMonitor.Views;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Monbsoft.MachineMonitor
@@ -23,7 +18,11 @@ namespace Monbsoft.MachineMonitor
             var value = SystemParameters.VirtualScreenLeft;
             if (value >= 0)
             {
-                value = SystemParameters.VirtualScreenWidth - _mainWindow.Width;
+                value = SystemParameters.VirtualScreenWidth - SystemParameters.PrimaryScreenWidth;
+            }
+            else
+            {
+                value = -_mainWindow.Width;
             }
             _mainWindow.Left = value;
             _mainWindow.Top = 0;
