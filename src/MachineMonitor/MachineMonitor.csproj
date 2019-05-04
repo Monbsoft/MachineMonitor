@@ -71,6 +71,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Configuration\ConfigurationStore.cs" />
+    <Compile Include="Messages\UpdatedConfigurationMessage.cs" />
     <Compile Include="Services\NetworkService.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

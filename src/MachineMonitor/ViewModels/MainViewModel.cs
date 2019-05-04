@@ -1,23 +1,21 @@
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
 using Monbsoft.MachineMonitor.Configuration;
-using Monbsoft.MachineMonitor.Services;
+using Monbsoft.MachineMonitor.Messages;
 using Monbsoft.MachineMonitor.Views;
-using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Windows.Threading;
+using static Monbsoft.MachineMonitor.Messages.UpdatedConfigurationMessage;
 
 namespace Monbsoft.MachineMonitor.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
         #region Champs
+        private readonly ConfigurationStore _configuration;
         private readonly PerformanceCounter _cpuCounter;
         private readonly PerformanceCounter _diskCounter;
         private readonly PerformanceCounter _memoryCounter;
         private readonly PerformanceCounter _networkCounter;
-        private readonly ConfigurationStore _configuration;
         private double _cpu;
         private double _disk;
         private double _network;
@@ -30,7 +28,7 @@ namespace Monbsoft.MachineMonitor.ViewModels
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(ConfigurationStore configuration, NetworkService networkService)
+        public MainViewModel(ConfigurationStore configuration)
         {
             _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
             _memoryCounter = new PerformanceCounter("Memory", "% Committed Bytes In Use");
@@ -41,6 +39,9 @@ namespace Monbsoft.MachineMonitor.ViewModels
                 _networkCounter = new PerformanceCounter("Network Interface", "Bytes Received/sec", configuration.Network);
             }
             _configuration = configuration;
+
+            // messages
+            Messenger.Default.Register<UpdatedConfigurationMessage>(this, HandleUpdatedConfiguration);
         }
         #endregion
 
@@ -88,7 +89,6 @@ namespace Monbsoft.MachineMonitor.ViewModels
         {
             _view = view;
             OnTransparencyChange(_configuration.Transparent);
-
         }
         public void Refresh()
         {
@@ -100,16 +100,23 @@ namespace Monbsoft.MachineMonitor.ViewModels
 
         private double GetPercentageNetwork()
         {
-            if(_networkCounter == null)
+            if (_networkCounter == null)
             {
                 return 0d;
             }
             double value = ((double)_networkCounter.NextValue() * 8) / 1000000;
-            if(_networkMax < value)
+            if (_networkMax < value)
             {
                 _networkMax = value;
             }
             return value * 100 / _networkMax;
+        }
+        private void HandleUpdatedConfiguration(UpdatedConfigurationMessage updatedMessage)
+        {
+            if (updatedMessage.Changed == ChangedType.Transparent)
+            {
+                OnTransparencyChange(_configuration.Transparent);
+            }
         }
         private void OnTransparencyChange(bool transparent)
         {
@@ -123,6 +130,5 @@ namespace Monbsoft.MachineMonitor.ViewModels
             }
         }
         #endregion
-
     }
 }

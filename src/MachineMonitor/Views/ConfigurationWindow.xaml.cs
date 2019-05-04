@@ -20,7 +20,6 @@ namespace Monbsoft.MachineMonitor.Views
     /// </summary>
     public partial class ConfigurationWindow : Window
     {
-
         #region Champs
         #endregion
 
@@ -40,7 +39,12 @@ namespace Monbsoft.MachineMonitor.Views
         #endregion
 
         #region Méthodes
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
         #endregion
+
 
     }
 }

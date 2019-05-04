@@ -1,8 +1,11 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
 using Monbsoft.MachineMonitor.Configuration;
+using Monbsoft.MachineMonitor.Messages;
 using Monbsoft.MachineMonitor.Services;
 using System;
 using System.Collections.Generic;
+using static Monbsoft.MachineMonitor.Messages.UpdatedConfigurationMessage;
 
 namespace Monbsoft.MachineMonitor.ViewModels
 {
@@ -21,12 +24,26 @@ namespace Monbsoft.MachineMonitor.ViewModels
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _networkService = networkService ?? throw new ArgumentNullException(nameof(networkService));
             Networks = _networkService.GetNetworks();
-            SelectedNetwork = _configuration.Network;
+            _network = _configuration.Network;
             _transparent = _configuration.Transparent;
         }
         #endregion
 
         #region Propriétés
+        public List<string> Networks
+        {
+            get;
+            private set;
+        }
+        public string SelectedNetwork
+        {
+            get { return _network; }
+            set
+            {
+                Set(ref _network, value);
+                Network_Changed();
+            }
+        }
         public bool Transparent
         {
             get
@@ -39,32 +56,24 @@ namespace Monbsoft.MachineMonitor.ViewModels
                 Transparent_Changed();
             }
         }
-        public List<string> Networks
-        {
-            get;
-            private set;
-        }
-
-        public string SelectedNetwork
-        {
-            get { return _network; }
-            set
-            {
-                Set(ref _network, value);
-                Network_Changed();
-            }
-        }
         #endregion
 
         #region Méthodes
+        private static void SendMessage(ChangedType type)
+        {
+            Messenger.Default.Send<UpdatedConfigurationMessage>(new UpdatedConfigurationMessage(type));
+
+        }
         private void Network_Changed()
         {
             _configuration.Network = SelectedNetwork;
+            SendMessage(ChangedType.Network);
         }
 
         private void Transparent_Changed()
         {
             _configuration.Transparent = _transparent;
+            SendMessage(ChangedType.Transparent);
         }
         #endregion
     }
