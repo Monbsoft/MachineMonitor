@@ -72,6 +72,9 @@ namespace Monbsoft.MachineMonitor.ViewModels
             set { Set(ref _disk, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the percentage of the network usage.
+        /// </summary>
         public double Network
         {
             get { return _network; }
@@ -98,6 +101,9 @@ namespace Monbsoft.MachineMonitor.ViewModels
             _view = view;
             OnTransparencyChange(_configuration.Transparent);
         }
+        /// <summary>
+        /// Starts the counters.
+        /// </summary>
         public void Start()
         {
             _timer.Start();

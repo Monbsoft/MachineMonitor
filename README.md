@@ -3,7 +3,7 @@
 
 Machine Monitor is a system monitor to display resources and performances of your machine (CPU, Memory and GPU). 
 
-![alt text](doc/capture.jpg "Machine Monitor")
+![capture](doc/capture.png "Machine Monitor")
 
 ## Credits
 * [windows-toolkit/WindowsCommunityToolkit](https://github.com/windows-toolkit/WindowsCommunityToolkit), The Windows Community Toolkit is a collection of helper functions, custom controls, and app services. 
