@@ -12,6 +12,7 @@ namespace Monbsoft.MachineMonitor.ViewModels
         private readonly ConfigurationStore _configuration;
         private readonly NetworkService _networkService;
         private string _network;
+        private bool _transparent;
         #endregion
 
         #region Constructeurs
@@ -19,11 +20,25 @@ namespace Monbsoft.MachineMonitor.ViewModels
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _networkService = networkService ?? throw new ArgumentNullException(nameof(networkService));
-            Initialize();
+            Networks = _networkService.GetNetworks();
+            SelectedNetwork = _configuration.Network;
+            _transparent = _configuration.Transparent;
         }
         #endregion
 
         #region Propriétés
+        public bool Transparent
+        {
+            get
+            {
+                return _transparent;
+            }
+            set
+            {
+                Set(ref _transparent, value);
+                Transparent_Changed();
+            }
+        }
         public List<string> Networks
         {
             get;
@@ -42,15 +57,14 @@ namespace Monbsoft.MachineMonitor.ViewModels
         #endregion
 
         #region Méthodes
-
-
         private void Network_Changed()
         {
             _configuration.Network = SelectedNetwork;
         }
-        private void Initialize()
+
+        private void Transparent_Changed()
         {
-            Networks = _networkService.GetNetworks();
+            _configuration.Transparent = _transparent;
         }
         #endregion
     }

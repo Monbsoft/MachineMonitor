@@ -12,17 +12,18 @@ namespace Monbsoft.MachineMonitor.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-
         #region Champs
         private readonly PerformanceCounter _cpuCounter;
         private readonly PerformanceCounter _diskCounter;
         private readonly PerformanceCounter _memoryCounter;
         private readonly PerformanceCounter _networkCounter;
+        private readonly ConfigurationStore _configuration;
         private double _cpu;
         private double _disk;
-        private double _ram;
         private double _network;
         private double _networkMax;
+        private double _ram;
+        private MainWindow _view;
         #endregion
 
         #region Constructeurs
@@ -39,6 +40,7 @@ namespace Monbsoft.MachineMonitor.ViewModels
             {
                 _networkCounter = new PerformanceCounter("Network Interface", "Bytes Received/sec", configuration.Network);
             }
+            _configuration = configuration;
         }
         #endregion
 
@@ -78,11 +80,20 @@ namespace Monbsoft.MachineMonitor.ViewModels
         #endregion
 
         #region Méthodes
+        /// <summary>
+        /// Initialise le modèle de vue avec la vue spécifiée.
+        /// </summary>
+        /// <param name="view"></param>
+        public void Initialize(MainWindow view)
+        {
+            _view = view;
+            OnTransparencyChange(_configuration.Transparent);
+
+        }
         public void Refresh()
         {
             Cpu = _cpuCounter.NextValue();
             Ram = _memoryCounter.NextValue();
-            Console.WriteLine($"Ram = {Ram}");
             Disk = _diskCounter.NextValue();
             Network = GetPercentageNetwork();
         }
@@ -99,6 +110,17 @@ namespace Monbsoft.MachineMonitor.ViewModels
                 _networkMax = value;
             }
             return value * 100 / _networkMax;
+        }
+        private void OnTransparencyChange(bool transparent)
+        {
+            if (transparent)
+            {
+                _view.ActivateTransparency();
+            }
+            else
+            {
+                _view.DeactiveTransparency();
+            }
         }
         #endregion
 

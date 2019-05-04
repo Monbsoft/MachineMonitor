@@ -24,10 +24,7 @@ namespace Monbsoft.MachineMonitor
             {
                 value = -_mainWindow.Width;
             }
-            else
-            {
-                value = -_mainWindow.Width;
-            }
+
             _mainWindow.Left = value;
             _mainWindow.Top = 0;
             _mainWindow.Show();

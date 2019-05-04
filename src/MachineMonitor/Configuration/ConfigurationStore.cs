@@ -22,6 +22,19 @@ namespace Monbsoft.MachineMonitor.Configuration
             }
         }
 
+        public bool Transparent
+        {
+            get
+            {
+                return Settings.Default.Transparent;
+            }
+            set
+            {
+                Settings.Default.Transparent = value;
+                Save();
+            }
+        }
+
         private void Save()
         {
             Settings.Default.Save();

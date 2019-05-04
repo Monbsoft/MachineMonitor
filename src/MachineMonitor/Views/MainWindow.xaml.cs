@@ -23,6 +23,8 @@ namespace Monbsoft.MachineMonitor.Views
     public partial class MainWindow : Window
     {
         #region Champs
+        private const double Opaque = 1d;
+        private const double Transparency = 0.5d;
         private DispatcherTimer _timer;
         #endregion
 
@@ -31,6 +33,7 @@ namespace Monbsoft.MachineMonitor.Views
         {
             InitializeComponent();
             DataContext = ViewModel;
+            ViewModel.Initialize(this);
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromMilliseconds(500);
             _timer.Tick += Timer_Tick;
@@ -45,6 +48,17 @@ namespace Monbsoft.MachineMonitor.Views
         #endregion
 
         #region Méthodes
+        public void ActivateTransparency()
+        {
+            Activated += Window_Activated;
+            Deactivated += Window_Deactivated;
+            Opacity = Transparency;
+        }
+        public void DeactiveTransparency()
+        {
+            Activated -= Window_Activated;
+            Deactivated -= Window_Deactivated;
+        }
         private void CloseMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -58,6 +72,14 @@ namespace Monbsoft.MachineMonitor.Views
         private void Timer_Tick(object sender, EventArgs e)
         {
             ViewModel.Refresh();
+        }
+        private void Window_Activated(object sender, System.EventArgs e)
+        {
+            Opacity = Opaque;
+        }
+        private void Window_Deactivated(object sender, System.EventArgs e)
+        {
+            Opacity = Transparency;
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
