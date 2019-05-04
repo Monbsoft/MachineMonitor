@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2E56B2BC-93E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MachineMonitor", "src\MachineMonitor\MachineMonitor.csproj", "{CD2F194B-D166-430A-B108-04036A98B145}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MachineMonitor.Setup", "MachineMonitor.Setup\MachineMonitor.Setup.vdproj", "{BDA2579E-B190-400A-8698-3055C1C6A746}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MachineMonitor.Setup", "src\MachineMonitor.Setup\MachineMonitor.Setup.vdproj", "{2AF1D126-6A21-497A-8970-2370E64D5F84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,15 +19,17 @@ Global
 		{CD2F194B-D166-430A-B108-04036A98B145}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD2F194B-D166-430A-B108-04036A98B145}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD2F194B-D166-430A-B108-04036A98B145}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BDA2579E-B190-400A-8698-3055C1C6A746}.Debug|Any CPU.ActiveCfg = Debug
-		{BDA2579E-B190-400A-8698-3055C1C6A746}.Release|Any CPU.ActiveCfg = Release
+		{2AF1D126-6A21-497A-8970-2370E64D5F84}.Debug|Any CPU.ActiveCfg = Debug
+		{2AF1D126-6A21-497A-8970-2370E64D5F84}.Debug|Any CPU.Build.0 = Debug
+		{2AF1D126-6A21-497A-8970-2370E64D5F84}.Release|Any CPU.ActiveCfg = Release
+		{2AF1D126-6A21-497A-8970-2370E64D5F84}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CD2F194B-D166-430A-B108-04036A98B145} = {2E56B2BC-93E2-4AE0-A85D-434D63B395CC}
-		{BDA2579E-B190-400A-8698-3055C1C6A746} = {2E56B2BC-93E2-4AE0-A85D-434D63B395CC}
+		{2AF1D126-6A21-497A-8970-2370E64D5F84} = {2E56B2BC-93E2-4AE0-A85D-434D63B395CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3AEC2666-17B6-42B1-8894-952B6A8FC07C}
