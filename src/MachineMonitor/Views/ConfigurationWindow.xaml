@@ -6,7 +6,10 @@
         mc:Ignorable="d"
         Title="Configuration"
         Background="{StaticResource SystemControlBackgroundBrush}"
-        WindowStartupLocation="CenterScreen" Width="400" Height="200">
+        Height="200" 
+        ShowInTaskbar="False"
+        Width="400" 
+        WindowStartupLocation="CenterScreen">
     <Grid Margin="5,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"/>
@@ -17,30 +20,41 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>            
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Style="{StaticResource TextBlockStyle}"
-                   Text="Réseau:"/>
+                   Text="Disque:"/>
         <ComboBox Grid.Column="1"
                   Grid.Row="1"
+                  HorizontalAlignment="Left"
+                  ItemsSource="{Binding Disks}"
+                  SelectedItem="{Binding SelectedDisk}"
+                  Width="150"/>
+        <TextBlock Grid.Row="2"
+                   Style="{StaticResource TextBlockStyle}"
+                   Text="Réseau:"/>
+        <ComboBox Grid.Column="1"
+                  Grid.Row="3"
                   HorizontalAlignment="Left"
                   ItemsSource="{Binding Networks}"
                   SelectedItem="{Binding SelectedNetwork}"
                   Width="150">
         </ComboBox>
-        <TextBlock Grid.Row="2"
+        <TextBlock Grid.Row="4"
                    Style="{StaticResource TextBlockStyle}"
                    Text="Transparence:"/>
         <CheckBox Grid.Column="1"
-                  Grid.Row="3"
+                  Grid.Row="5"
                   IsChecked="{Binding Transparent}"/>
         <Button x:Name="closeButton" 
                 Click="CloseButton_Click"
                 Content="Fermer"
                 HorizontalAlignment="Center"
                 Grid.ColumnSpan="2"
-                Grid.Row="5"
+                Grid.Row="7"
                 Margin="5"
                 Padding="5" />
     </Grid>

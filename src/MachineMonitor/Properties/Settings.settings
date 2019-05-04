@@ -8,5 +8,8 @@
     <Setting Name="Transparent" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="Disk" Type="System.String" Scope="User">
+      <Value Profile="(Default)">_Total</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

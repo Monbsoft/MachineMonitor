@@ -13,28 +13,60 @@ namespace Monbsoft.MachineMonitor.ViewModels
     {
         #region Champs
         private readonly ConfigurationStore _configuration;
-        private readonly NetworkService _networkService;
+        private string _disk;
         private string _network;
         private bool _transparent;
         #endregion
 
         #region Constructeurs
-        public ConfigurationViewModel(ConfigurationStore configuration, NetworkService networkService)
+        public ConfigurationViewModel(
+            ConfigurationStore configuration,
+            NetworkService networkService,
+            DiskService diskService)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-            _networkService = networkService ?? throw new ArgumentNullException(nameof(networkService));
-            Networks = _networkService.GetNetworks();
+            if (networkService == null)
+            {
+                throw new ArgumentNullException(nameof(networkService));
+            }
+            if (diskService == null)
+            {
+                throw new ArgumentNullException(nameof(diskService));
+            }
+
+            Networks = networkService.GetNetworks();
+            Disks = diskService.GetDisks();
+            _disk = _configuration.Disk;
             _network = _configuration.Network;
             _transparent = _configuration.Transparent;
         }
         #endregion
 
         #region Propriétés
+        public List<string> Disks
+        {
+            get;
+            private set;
+        }
         public List<string> Networks
         {
             get;
             private set;
         }
+
+        public string SelectedDisk
+        {
+            get
+            {
+                return _disk;
+            }
+            set
+            {
+                Set(ref _disk, value);
+                Disk_Changed();
+            }
+        }
+
         public string SelectedNetwork
         {
             get { return _network; }
@@ -62,7 +94,11 @@ namespace Monbsoft.MachineMonitor.ViewModels
         private static void SendMessage(ChangedType type)
         {
             Messenger.Default.Send<UpdatedConfigurationMessage>(new UpdatedConfigurationMessage(type));
-
+        }
+        private void Disk_Changed()
+        {
+            _configuration.Disk = SelectedDisk;
+            SendMessage(ChangedType.Disk);
         }
         private void Network_Changed()
         {

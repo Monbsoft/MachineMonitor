@@ -3,7 +3,9 @@ using GalaSoft.MvvmLight.Messaging;
 using Monbsoft.MachineMonitor.Configuration;
 using Monbsoft.MachineMonitor.Messages;
 using Monbsoft.MachineMonitor.Views;
+using System;
 using System.Diagnostics;
+using System.Windows.Threading;
 using static Monbsoft.MachineMonitor.Messages.UpdatedConfigurationMessage;
 
 namespace Monbsoft.MachineMonitor.ViewModels
@@ -13,11 +15,12 @@ namespace Monbsoft.MachineMonitor.ViewModels
         #region Champs
         private readonly ConfigurationStore _configuration;
         private readonly PerformanceCounter _cpuCounter;
-        private readonly PerformanceCounter _diskCounter;
         private readonly PerformanceCounter _memoryCounter;
         private readonly PerformanceCounter _networkCounter;
+        private readonly DispatcherTimer _timer;
         private double _cpu;
         private double _disk;
+        private PerformanceCounter _diskCounter;
         private double _network;
         private double _networkMax;
         private double _ram;
@@ -30,18 +33,23 @@ namespace Monbsoft.MachineMonitor.ViewModels
         /// </summary>
         public MainViewModel(ConfigurationStore configuration)
         {
+            _configuration = configuration;
             _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
             _memoryCounter = new PerformanceCounter("Memory", "% Committed Bytes In Use");
-            _diskCounter = new PerformanceCounter("PhysicalDisk", "% Disk Read Time", "_Total");
 
             if (configuration != null && !string.IsNullOrEmpty(configuration.Network))
             {
                 _networkCounter = new PerformanceCounter("Network Interface", "Bytes Received/sec", configuration.Network);
             }
-            _configuration = configuration;
+
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromMilliseconds(500);
+            _timer.Tick += Timer_Tick;
 
             // messages
             Messenger.Default.Register<UpdatedConfigurationMessage>(this, HandleUpdatedConfiguration);
+
+            OnDiskChange();
         }
         #endregion
 
@@ -90,14 +98,10 @@ namespace Monbsoft.MachineMonitor.ViewModels
             _view = view;
             OnTransparencyChange(_configuration.Transparent);
         }
-        public void Refresh()
+        public void Start()
         {
-            Cpu = _cpuCounter.NextValue();
-            Ram = _memoryCounter.NextValue();
-            Disk = _diskCounter.NextValue();
-            Network = GetPercentageNetwork();
+            _timer.Start();
         }
-
         private double GetPercentageNetwork()
         {
             if (_networkCounter == null)
@@ -113,10 +117,31 @@ namespace Monbsoft.MachineMonitor.ViewModels
         }
         private void HandleUpdatedConfiguration(UpdatedConfigurationMessage updatedMessage)
         {
-            if (updatedMessage.Changed == ChangedType.Transparent)
+            _timer.Stop();
+            switch(updatedMessage.Changed)
             {
-                OnTransparencyChange(_configuration.Transparent);
+                case ChangedType.Disk:
+                    {
+                        OnDiskChange();
+                        break;
+                    }
+                case ChangedType.Transparent:
+                    {
+                        OnTransparencyChange(_configuration.Transparent);
+                        break;
+                    }
+                    
+                default:
+                    {
+                        break;
+                    }
             }
+            _timer.Start();
+
+        }
+        private void OnDiskChange()
+        {
+            _diskCounter = new PerformanceCounter("PhysicalDisk", "% Disk Time",_configuration.Disk);
         }
         private void OnTransparencyChange(bool transparent)
         {
@@ -128,6 +153,13 @@ namespace Monbsoft.MachineMonitor.ViewModels
             {
                 _view.DeactiveTransparency();
             }
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            Cpu = _cpuCounter.NextValue();
+            Ram = _memoryCounter.NextValue();
+            Disk = _diskCounter.NextValue();
+            Network = GetPercentageNetwork();
         }
         #endregion
     }

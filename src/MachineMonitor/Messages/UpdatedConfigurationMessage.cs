@@ -13,8 +13,9 @@ namespace Monbsoft.MachineMonitor.Messages
 
         public enum ChangedType
         {
-            Network,
-            Transparent
+            Disk = 0,
+            Network = 1,
+            Transparent = 2
         }
 
         public ChangedType Changed { get; set; }

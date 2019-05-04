@@ -39,6 +39,7 @@ namespace Monbsoft.MachineMonitor.ViewModels
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);           
             SimpleIoc.Default.Register<ConfigurationStore>();
             SimpleIoc.Default.Register<NetworkService>();
+            SimpleIoc.Default.Register<DiskService>();        
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<ConfigurationViewModel>();
         }

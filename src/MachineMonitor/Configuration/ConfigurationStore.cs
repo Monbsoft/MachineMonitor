@@ -1,14 +1,22 @@
 ﻿using Monbsoft.MachineMonitor.Properties;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Monbsoft.MachineMonitor.Configuration
 {
     public class ConfigurationStore
     {
+        public string Disk
+        {
+            get
+            {
+                return Settings.Default.Disk;
+            }
+            set
+            {
+                Settings.Default.Disk = value;
+                Save();
+            }
+        }
+
         public string Network
         {
             get

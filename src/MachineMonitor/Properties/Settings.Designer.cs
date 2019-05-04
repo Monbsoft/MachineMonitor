@@ -46,5 +46,17 @@ namespace Monbsoft.MachineMonitor.Properties {
                 this["Transparent"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("_Total")]
+        public string Disk {
+            get {
+                return ((string)(this["Disk"]));
+            }
+            set {
+                this["Disk"] = value;
+            }
+        }
     }
 }

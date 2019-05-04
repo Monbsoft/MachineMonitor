@@ -13,7 +13,6 @@ namespace Monbsoft.MachineMonitor.Views
         #region Champs
         private const double Opaque = 1d;
         private const double Transparency = 0.5d;
-        private DispatcherTimer _timer;
         #endregion
 
         #region Constructeurs
@@ -22,9 +21,6 @@ namespace Monbsoft.MachineMonitor.Views
             InitializeComponent();
             DataContext = ViewModel;
             ViewModel.Initialize(this);
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromMilliseconds(500);
-            _timer.Tick += Timer_Tick;
         }
         #endregion
 
@@ -58,10 +54,6 @@ namespace Monbsoft.MachineMonitor.Views
             dlg.Owner = this;
             dlg.ShowDialog();
         }
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            ViewModel.Refresh();
-        }
         private void Window_Activated(object sender, System.EventArgs e)
         {
             Opacity = Opaque;
@@ -72,7 +64,7 @@ namespace Monbsoft.MachineMonitor.Views
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _timer.Start();
+            ViewModel.Start();
         }
         #endregion
 
