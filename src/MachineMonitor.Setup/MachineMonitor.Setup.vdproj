@@ -874,12 +874,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_65962FAD32E532C86114D54759999E23"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_A5CBE260681E4F25B804423F0E685811"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1633,6 +1627,12 @@
         "OwnerKey" = "8:_95C1E8170F9B955B86EE777B8BB17BCC"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_65962FAD32E532C86114D54759999E23"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -1651,6 +1651,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -1667,6 +1675,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -5739,7 +5755,7 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:MachineMonitor.Setup"
+        "ProductName" = "8:MachineMonitor"
         "ProductCode" = "8:{FE097D54-C8A8-41F0-BA1F-E83B1108468D}"
         "PackageCode" = "8:{4C8E80D1-8132-4977-834C-980349E90D81}"
         "UpgradeCode" = "8:{1DB3CEEF-D801-4795-8E91-27ABFB4EFF46}"
@@ -6276,7 +6292,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A5CBE260681E4F25B804423F0E685811"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\MachineMonitor\\obj\\Release\\MachineMonitor.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F9568AA8B4624F80A9DCDBFC3EFDE8AA"
