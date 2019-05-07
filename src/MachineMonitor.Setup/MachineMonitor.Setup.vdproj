@@ -5893,9 +5893,9 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C0501583B5F34709BA05BB8A6282E6EB"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_BB19823154484231B3787D64964E0B09"
             {
-            "Name" = "8:Machine Monitor"
+            "Name" = "8:MachineMonitor"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
