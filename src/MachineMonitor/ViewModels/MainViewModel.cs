@@ -13,11 +13,13 @@ namespace Monbsoft.MachineMonitor.ViewModels
     public class MainViewModel : ViewModelBase
     {
         #region Champs
+        private const double Giga = 1073741824d;
         private readonly ConfigurationStore _configuration;
         private readonly PerformanceCounter _cpuCounter;
         private readonly PerformanceCounter _memoryCounter;
         private readonly PerformanceCounter _networkCounter;
         private readonly DispatcherTimer _timer;
+        private readonly PerformanceCounter _totalRamCounter;
         private double _cpu;
         private double _disk;
         private PerformanceCounter _diskCounter;
@@ -35,7 +37,8 @@ namespace Monbsoft.MachineMonitor.ViewModels
         {
             _configuration = configuration;
             _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-            _memoryCounter = new PerformanceCounter("Memory", "% Committed Bytes In Use");
+            _memoryCounter = new PerformanceCounter("Memory", "Available Bytes");
+            _totalRamCounter = new PerformanceCounter("Memory", "Committed Bytes");
 
             if (configuration != null && !string.IsNullOrEmpty(configuration.Network))
             {
@@ -108,6 +111,13 @@ namespace Monbsoft.MachineMonitor.ViewModels
         {
             _timer.Start();
         }
+        private double CalculatePercent()
+        {
+            double total = _totalRamCounter.NextValue();
+            double free = _memoryCounter.NextValue();
+            double use = (total - free);
+            return (use / total) * 100;
+        }
         private double GetPercentageNetwork()
         {
             if (_networkCounter == null)
@@ -163,7 +173,7 @@ namespace Monbsoft.MachineMonitor.ViewModels
         private void Timer_Tick(object sender, EventArgs e)
         {
             Cpu = _cpuCounter.NextValue();
-            Ram = _memoryCounter.NextValue();
+            Ram = CalculatePercent();
             Disk = _diskCounter.NextValue();
             Network = GetPercentageNetwork();
         }
