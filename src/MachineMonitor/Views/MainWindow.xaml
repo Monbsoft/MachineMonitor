@@ -10,6 +10,7 @@
         Height="100" 
         Loaded="Window_Loaded" 
         ResizeMode="NoResize"
+        ShowInTaskbar="False"
         Title="Machine Monitor"
         Topmost="True"
         Width="400" 

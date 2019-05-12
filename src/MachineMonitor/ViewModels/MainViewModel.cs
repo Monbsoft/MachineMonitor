@@ -19,17 +19,16 @@ namespace Monbsoft.MachineMonitor.ViewModels
         private readonly ConfigurationStore _configuration;
         private readonly PerformanceCounter _cpuCounter;
         private readonly PerformanceCounter _memoryCounter;
-        private readonly PerformanceCounter _networkCounter;
         private readonly DispatcherTimer _timer;
-        private readonly PerformanceCounter _totalRamCounter;
         private double _cpu;
         private double _disk;
         private PerformanceCounter _diskCounter;
+        private double _memoryTotal;
         private double _network;
+        private PerformanceCounter _networkCounter;
         private double _networkMax;
         private double _ram;
         private MainWindow _view;
-        private double _memoryTotal;
         #endregion
 
         #region Constructeurs
@@ -38,14 +37,9 @@ namespace Monbsoft.MachineMonitor.ViewModels
         /// </summary>
         public MainViewModel(ConfigurationStore configuration)
         {
-            _configuration = configuration;
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
             _memoryCounter = new PerformanceCounter("Memory", "Available MBytes");
-
-            if (configuration != null && !string.IsNullOrEmpty(configuration.Network))
-            {
-                _networkCounter = new PerformanceCounter("Network Interface", "Bytes Received/sec", configuration.Network);
-            }
 
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromMilliseconds(500);
@@ -55,6 +49,7 @@ namespace Monbsoft.MachineMonitor.ViewModels
             Messenger.Default.Register<UpdatedConfigurationMessage>(this, HandleUpdatedConfiguration);
 
             OnDiskChange();
+            OnNetworkChange();
         }
         #endregion
 
@@ -118,20 +113,19 @@ namespace Monbsoft.MachineMonitor.ViewModels
 
         }
 
-        private static double ToDouble(ManagementBaseObject mo, string name, double divider)
-        {
-            var value = mo[name];
-            return value == null
-                ? 0
-                : (double.TryParse(value.ToString(), out double result) ? result / divider : 0);
-        }
-
         /// <summary>
         /// Starts the counters.
         /// </summary>
         public void Start()
         {
             _timer.Start();
+        }
+        private static double ToDouble(ManagementBaseObject mo, string name, double divider)
+        {
+            var value = mo[name];
+            return value == null
+                ? 0
+                : (double.TryParse(value.ToString(), out double result) ? result / divider : 0);
         }
         private double CalculatePercent()
         {
@@ -163,6 +157,11 @@ namespace Monbsoft.MachineMonitor.ViewModels
                         OnDiskChange();
                         break;
                     }
+                case ChangedType.Network:
+                    {
+                        OnNetworkChange();
+                        break;
+                    }
                 case ChangedType.Transparent:
                     {
                         OnTransparencyChange(_configuration.Transparent);
@@ -180,6 +179,16 @@ namespace Monbsoft.MachineMonitor.ViewModels
         private void OnDiskChange()
         {
             _diskCounter = new PerformanceCounter("PhysicalDisk", "% Disk Time",_configuration.Disk);
+        }
+
+        private void OnNetworkChange()
+        {
+            if(string.IsNullOrEmpty(_configuration.Network))
+            {
+                _networkCounter = null;
+                return;
+            }
+            _networkCounter = new PerformanceCounter("Network Interface", "Bytes Received/sec", _configuration.Network);
         }
         private void OnTransparencyChange(bool transparent)
         {
