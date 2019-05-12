@@ -8,7 +8,6 @@
         AllowsTransparency="True"
         Background="{StaticResource SystemControlBackgroundBrush}"
         Height="100" 
-        Icon="/MachineMonitor;component/Assets/machineicon.ico"
         Loaded="Window_Loaded" 
         ResizeMode="NoResize"
         Title="Machine Monitor"

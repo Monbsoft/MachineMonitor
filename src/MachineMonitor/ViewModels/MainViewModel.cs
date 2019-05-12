@@ -5,6 +5,8 @@ using Monbsoft.MachineMonitor.Messages;
 using Monbsoft.MachineMonitor.Views;
 using System;
 using System.Diagnostics;
+using System.Linq;
+using System.Management;
 using System.Windows.Threading;
 using static Monbsoft.MachineMonitor.Messages.UpdatedConfigurationMessage;
 
@@ -13,7 +15,7 @@ namespace Monbsoft.MachineMonitor.ViewModels
     public class MainViewModel : ViewModelBase
     {
         #region Champs
-        private const double Giga = 1073741824d;
+        private const double Mega = 1048576d;
         private readonly ConfigurationStore _configuration;
         private readonly PerformanceCounter _cpuCounter;
         private readonly PerformanceCounter _memoryCounter;
@@ -27,6 +29,7 @@ namespace Monbsoft.MachineMonitor.ViewModels
         private double _networkMax;
         private double _ram;
         private MainWindow _view;
+        private double _memoryTotal;
         #endregion
 
         #region Constructeurs
@@ -37,8 +40,7 @@ namespace Monbsoft.MachineMonitor.ViewModels
         {
             _configuration = configuration;
             _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-            _memoryCounter = new PerformanceCounter("Memory", "Available Bytes");
-            _totalRamCounter = new PerformanceCounter("Memory", "Committed Bytes");
+            _memoryCounter = new PerformanceCounter("Memory", "Available MBytes");
 
             if (configuration != null && !string.IsNullOrEmpty(configuration.Network))
             {
@@ -103,7 +105,27 @@ namespace Monbsoft.MachineMonitor.ViewModels
         {
             _view = view;
             OnTransparencyChange(_configuration.Transparent);
+
+            // récupère le total de mémoire
+            ManagementObjectSearcher searcher =
+                new ManagementObjectSearcher(
+                    "SELECT * FROM Win32_ComputerSystem");
+
+            foreach(var mobject in searcher.Get())
+            {
+                _memoryTotal = ToDouble(mobject, "TotalPhysicalMemory", Mega);
+            }
+
         }
+
+        private static double ToDouble(ManagementBaseObject mo, string name, double divider)
+        {
+            var value = mo[name];
+            return value == null
+                ? 0
+                : (double.TryParse(value.ToString(), out double result) ? result / divider : 0);
+        }
+
         /// <summary>
         /// Starts the counters.
         /// </summary>
@@ -113,10 +135,10 @@ namespace Monbsoft.MachineMonitor.ViewModels
         }
         private double CalculatePercent()
         {
-            double total = _totalRamCounter.NextValue();
             double free = _memoryCounter.NextValue();
-            double use = (total - free);
-            return (use / total) * 100;
+            double use = (_memoryTotal - free);
+            double percent = Math.Round((use / _memoryTotal) * 100, 2);
+            return percent;
         }
         private double GetPercentageNetwork()
         {
