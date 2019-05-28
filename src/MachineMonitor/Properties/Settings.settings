@@ -11,5 +11,8 @@
     <Setting Name="Disk" Type="System.String" Scope="User">
       <Value Profile="(Default)">_Total</Value>
     </Setting>
+    <Setting Name="Topmost" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

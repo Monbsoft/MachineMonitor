@@ -167,7 +167,11 @@ namespace Monbsoft.MachineMonitor.ViewModels
                         OnTransparencyChange(_configuration.Transparent);
                         break;
                     }
-                    
+                case ChangedType.Topmost:
+                    {
+                        OnTopmostChange();
+                        break;
+                    }
                 default:
                     {
                         break;
@@ -183,12 +187,17 @@ namespace Monbsoft.MachineMonitor.ViewModels
 
         private void OnNetworkChange()
         {
-            if(string.IsNullOrEmpty(_configuration.Network))
+            if (string.IsNullOrEmpty(_configuration.Network))
             {
                 _networkCounter = null;
                 return;
             }
             _networkCounter = new PerformanceCounter("Network Interface", "Bytes Received/sec", _configuration.Network);
+        }
+        private void OnTopmostChange()
+        {
+            _view.Topmost = _configuration.Topmost;
+            //_view.Activate();
         }
         private void OnTransparencyChange(bool transparent)
         {
