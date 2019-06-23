@@ -1,6 +1,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using Monbsoft.MachineMonitor.Configuration;
+using Monbsoft.MachineMonitor.Helpers;
 using Monbsoft.MachineMonitor.Messages;
 using Monbsoft.MachineMonitor.Views;
 using System;
@@ -23,6 +24,8 @@ namespace Monbsoft.MachineMonitor.ViewModels
         private double _cpu;
         private double _disk;
         private PerformanceCounter _diskCounter;
+        private string _displayMemory;
+        private string _displayNetwork;
         private double _memoryTotal;
         private double _network;
         private PerformanceCounter _networkCounter;
@@ -73,6 +76,22 @@ namespace Monbsoft.MachineMonitor.ViewModels
         }
 
         /// <summary>
+        /// Gets or sets the usage of the memory with the specified unit.
+        /// </summary>
+        public string DisplayMemory
+        {
+            get { return _displayMemory; }
+            set { Set(ref _displayMemory, value); }
+        }
+        /// <summary>
+        /// Gets or sets the usage of the network with the specified unit.
+        /// </summary>
+        public string DisplayNetwork
+        {
+            get { return _displayNetwork; }
+            set { Set(ref _displayNetwork, value); }
+        }
+        /// <summary>
         /// Gets or sets the percentage of the network usage.
         /// </summary>
         public double Network
@@ -109,8 +128,7 @@ namespace Monbsoft.MachineMonitor.ViewModels
             foreach(var mobject in searcher.Get())
             {
                 _memoryTotal = ToDouble(mobject, "TotalPhysicalMemory", Mega);
-            }
-
+            }           
         }
 
         /// <summary>
@@ -132,6 +150,8 @@ namespace Monbsoft.MachineMonitor.ViewModels
             double free = _memoryCounter.NextValue();
             double use = (_memoryTotal - free);
             double percent = Math.Round((use / _memoryTotal) * 100, 2);
+
+            DisplayMemory = OctetHelper.DisplayMega(use);
             return percent;
         }
         private double GetPercentageNetwork()
@@ -140,11 +160,16 @@ namespace Monbsoft.MachineMonitor.ViewModels
             {
                 return 0d;
             }
-            double value = ((double)_networkCounter.NextValue() * 8) / 1000000;
+            double bytes = ((double)_networkCounter.NextValue());
+
+            double value = ((double)bytes * 8) / 1000000;
             if (_networkMax < value)
             {
                 _networkMax = value;
             }
+
+            DisplayNetwork = BitHelper.DisplayByte(bytes);
+
             return value * 100 / _networkMax;
         }
         private void HandleUpdatedConfiguration(UpdatedConfigurationMessage updatedMessage)

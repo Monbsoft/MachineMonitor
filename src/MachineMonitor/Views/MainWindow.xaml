@@ -36,6 +36,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>            
             <RowDefinition/>
         </Grid.RowDefinitions>
         <!-- cpu -->
@@ -64,6 +65,12 @@
                                     Value="{Binding Ram, Mode=OneWay}"                                    
                                     Width="50">
         </controls:RadialProgressBar>
+        <TextBlock Foreground="White"
+                   Grid.Column="1"
+                   Grid.Row="2"
+                   Margin="0,5"
+                   Text="{Binding DisplayMemory, Mode=OneWay}"
+                   TextAlignment="Center"/>                   
         <!-- Disk -->
         <TextBlock Grid.Column="2"
                    Style="{StaticResource TitleStyle}" 
@@ -91,6 +98,12 @@
                                     Thickness="6"
                                     Value="{Binding Network, Mode=OneWay}"                                    
                                     Width="50">
-        </controls:RadialProgressBar>        
+        </controls:RadialProgressBar>
+        <TextBlock Foreground="White" 
+                   Grid.Column="3"
+                   Grid.Row="2"     
+                   Margin="0,5"
+                   Text="{Binding DisplayNetwork, Mode=OneWay}"
+                   TextAlignment="Center"/>
     </Grid>
 </Window>
