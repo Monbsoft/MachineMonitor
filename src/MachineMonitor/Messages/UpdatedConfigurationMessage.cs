@@ -15,7 +15,8 @@ namespace Monbsoft.MachineMonitor.Messages
         {
             Disk = 0,
             Network = 1,
-            Transparent = 2
+            Transparent = 2,
+            Topmost = 3
         }
 
         public ChangedType Changed { get; set; }

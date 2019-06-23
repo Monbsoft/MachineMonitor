@@ -30,6 +30,20 @@ namespace Monbsoft.MachineMonitor.Configuration
             }
         }
 
+        public bool Topmost
+        {
+            get
+            {
+                return Settings.Default.Topmost;
+            }
+            set
+            {
+                Settings.Default.Topmost = value;
+                Save();
+            }
+        }
+
+
         public bool Transparent
         {
             get

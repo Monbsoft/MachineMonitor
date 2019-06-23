@@ -5772,15 +5772,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MachineMonitor"
-        "ProductCode" = "8:{34C0391C-F0AB-48EA-A866-DA434C86E217}"
-        "PackageCode" = "8:{5D8BAE24-EBBA-4B25-88B9-A4EE636BDEC5}"
+        "ProductCode" = "8:{18926866-857D-4E78-9011-7BDBECF88449}"
+        "PackageCode" = "8:{1E9DAF35-6DA2-4CA5-8D87-CFAB211E80C9}"
         "UpgradeCode" = "8:{1DB3CEEF-D801-4795-8E91-27ABFB4EFF46}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.1"
+        "ProductVersion" = "8:1.0.3"
         "Manufacturer" = "8:Monbsoft"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -6308,7 +6308,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A5CBE260681E4F25B804423F0E685811"
             {
-            "SourcePath" = "8:..\\MachineMonitor\\obj\\Release\\MachineMonitor.exe"
+            "SourcePath" = "8:..\\MachineMonitor\\obj\\Debug\\MachineMonitor.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F9568AA8B4624F80A9DCDBFC3EFDE8AA"

@@ -16,6 +16,7 @@ namespace Monbsoft.MachineMonitor.ViewModels
         private string _disk;
         private string _network;
         private bool _transparent;
+        private bool _topmost;
         #endregion
 
         #region Constructeurs
@@ -88,6 +89,19 @@ namespace Monbsoft.MachineMonitor.ViewModels
                 Transparent_Changed();
             }
         }
+
+        public bool Topmost
+        {
+            get
+            {
+                return _topmost;
+            }
+            set
+            {
+                Set(ref _topmost, value);
+                Topmost_Changed();
+            }
+        }
         #endregion
 
         #region Méthodes
@@ -110,6 +124,12 @@ namespace Monbsoft.MachineMonitor.ViewModels
         {
             _configuration.Transparent = _transparent;
             SendMessage(ChangedType.Transparent);
+        }
+
+        private void Topmost_Changed()
+        {
+            _configuration.Topmost = _topmost;
+            SendMessage(ChangedType.Topmost);
         }
         #endregion
     }
